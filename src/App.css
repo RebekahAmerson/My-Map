@@ -2,7 +2,7 @@
   text-align: center;
   color: white;
   display: grid;
-  grid-template-areas: 'head' 'map' 'filter' 'list' 'foot';
+  grid-template-areas: 'head' 'map' 'filter' 'foot';
 }
 
 h1 {
@@ -31,11 +31,10 @@ h1 {
 #search-options {
   background-color: #484848;
   height: 50px;
-  grid-area: list;
 }
 
 #search-bar {
-  margin-top: 10px;
+  padding-top: 10px;
 }
 
 input {
@@ -50,9 +49,7 @@ button {
 }
 
 #list-view {
-  /* background-color: #484848; */
-  background-color: hotpink;
-  grid-area: filter;
+  background-color: #484848;
 }
 
 #list {
@@ -75,11 +72,15 @@ button {
   grid-area: foot;
 }
 
+#wrapper {
+  grid-area: filter;
+}
+
 /*  Media Queries  */
 @media only screen and (min-width: 590px) {
   .App {
-    grid-template-areas: 'header header' 'map filter' 'map list' 'foot foot';
-    grid-template-rows: 50px 50px 1fr 35px;
+    grid-template-areas: 'header header' 'map filter' 'foot foot';
+    grid-template-rows: 50px 1fr 35px;
     grid-template-columns: 2fr 1fr;
   }
 

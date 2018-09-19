@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Map from './Map.js';
-import List from './List.js'
+import List from './List.js';
 
 class App extends Component {
   render() {
