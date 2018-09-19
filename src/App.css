@@ -31,7 +31,7 @@ h1 {
 #search-options {
   background-color: #484848;
   height: 50px;
-  grid-area: filter;
+  grid-area: list;
 }
 
 #search-bar {
@@ -50,9 +50,9 @@ button {
 }
 
 #list-view {
-  background-color: #484848;
-  /* height: 500px; */
-  grid-area: list;
+  /* background-color: #484848; */
+  background-color: hotpink;
+  grid-area: filter;
 }
 
 #list {
@@ -62,7 +62,6 @@ button {
 }
 
 .list-item {
-  /* margin: 10px auto; */
   border-bottom: solid 1px #585858;
   height: 40px;
   line-height: 40px;
@@ -92,5 +91,11 @@ button {
   #map {
     margin-top: 0;
     height: calc(100vh - 85px);
+  }
+
+  .list-item {
+    font-size: 1.1em;
+    height: calc((100vh - 145px)/10);
+    line-height: calc((100vh - 145px)/10);
   }
 }
