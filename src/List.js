@@ -2,7 +2,24 @@ import React, { Component } from 'react';
 
 
 class List extends Component {
+  state = {
+    locations: [
+      {name: 'Pittsburg State University'},
+      {name: 'The Mall Deli'},
+      {name: 'Kiddieland'},
+      {name: 'Lakeside Park'},
+      {name: 'Lotus Express'},
+      {name: 'Harry\'s Cafe'},
+      {name: 'The Fox Theatre'},
+      {name: 'Moorman\'s'},
+      {name: 'Pitt Plastics'},
+      {name: 'NPC International'}
+    ]
+  }
+
   render() {
+    const locations = this.state.locations;
+
     return (
       <div id="wrapper">
         <div id="search-options">
@@ -13,16 +30,7 @@ class List extends Component {
         </div>
         <div id="list-view">
           <ul id="list">
-            <li className="list-item">Some neat place!</li>
-            <li className="list-item">Some neat place!</li>
-            <li className="list-item">Some neat place!</li>
-            <li className="list-item">Some neat place!</li>
-            <li className="list-item">Some neat place!</li>
-            <li className="list-item">Some neat place!</li>
-            <li className="list-item">Some neat place!</li>
-            <li className="list-item">Some neat place!</li>
-            <li className="list-item">Some neat place!</li>
-            <li className="list-item">Some neat place!</li>
+          {locations.map(location => (<li className="list-item">{location.name}</li>))}
           </ul>
         </div>
       </div>
