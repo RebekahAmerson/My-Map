@@ -5,6 +5,12 @@
   grid-template-areas: 'head' 'map' 'filter' 'list' 'foot';
 }
 
+h1 {
+  margin: 10px 0;
+  color: #FFCE07;
+  font-size: 1.4em;
+}
+
 #header {
   background-color: #D91734;
   width: 100%;
@@ -16,35 +22,71 @@
 
 #map {
   margin-top: 50px;
-  background-color: gold;
+  background-color: #F7F7F7;
+  color: black;
   height: 350px;
   grid-area: map;
 }
 
-#filter-options {
-  background-color: black;
+#search-options {
+  background-color: #484848;
   height: 50px;
   grid-area: filter;
 }
 
+#search-bar {
+  margin-top: 10px;
+}
+
+input {
+  width: calc(85% - 31px);
+  height: 25px;
+  padding-left: 5px;
+}
+
+button {
+  height: 31px;
+  margin-left: 2px;
+}
+
 #list-view {
-  background-color: grey;
+  background-color: #484848;
   /* height: 500px; */
   grid-area: list;
 }
 
+#list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  /* margin: 10px auto; */
+  border-bottom: solid 1px #585858;
+  height: 40px;
+  line-height: 40px;
+}
+
 #footer {
-  background-color: blue;
+  background-color: #D91734;
+  font-size: .75em;
   height: 35px;
+  line-height: 35px;
   grid-area: foot;
 }
 
 /*  Media Queries  */
-@media only screen and (min-width: 550px) {
+@media only screen and (min-width: 590px) {
   .App {
     grid-template-areas: 'header header' 'map filter' 'map list' 'foot foot';
     grid-template-rows: 50px 50px 1fr 35px;
     grid-template-columns: 2fr 1fr;
+  }
+
+  h1 {
+    font-size: 2em;
+    margin: 5px 0;
   }
 
   #map {
