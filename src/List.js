@@ -30,7 +30,7 @@ class List extends Component {
         </div>
         <div id="list-view">
           <ul id="list">
-          {locations.map(location => (<li className="list-item">{location.name}</li>))}
+          {locations.map(location => (<li className="list-item" key={location.name}>{location.name}</li>))}
           </ul>
         </div>
       </div>
