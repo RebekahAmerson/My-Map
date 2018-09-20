@@ -28,6 +28,10 @@ h1 {
   grid-area: map;
 }
 
+.mapboxgl-canvas {
+  left: 0;
+}
+
 #search-options {
   background-color: #484848;
   height: 50px;
