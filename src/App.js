@@ -12,7 +12,7 @@ class App extends Component {
       </header>
       <Map />
       <List />
-      <footer id="footer">Made using Google Maps and Foursquare API</footer>
+      <footer id="footer">Made using Mapbox and Foursquare API</footer>
       </div>
     );
   }
