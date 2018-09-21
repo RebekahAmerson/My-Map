@@ -24,6 +24,8 @@ class Map extends Component {
    }
 
   render() {
+    const {locations} = this.props;
+
     return (
       <div id="map"></div>
     )
