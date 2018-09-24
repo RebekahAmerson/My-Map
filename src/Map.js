@@ -27,10 +27,14 @@ componentDidMount() {
 
 makeMarker(locations) {
   if (this.state.mapReady) {
-  locations.forEach(location => {
-    new mapboxgl.Marker()
-    .setLngLat(location.coordinates)
-    .addTo(this.map);
+    locations.forEach(location => {
+      var el = document.createElement('div');
+ el.className = 'marker';
+      new mapboxgl.Marker(el)
+      .setLngLat(location.coordinates)
+      .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+      .setHTML('<h3>' + location.name + '</h3><p>' + location.description + '</p>'))
+      .addTo(this.map);
   })}
 }
 

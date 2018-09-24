@@ -80,6 +80,18 @@ button {
   grid-area: filter;
 }
 
+.marker {
+  background-image: url('red-pointer.png');
+  background-size: cover;
+  width: 27px;
+  height: 41px;
+  cursor: pointer;
+}
+
+.marker:hover {
+  background-image: url('gold-pointer.png');
+}
+
 /*  Media Queries  */
 @media only screen and (min-width: 590px) {
   .App {

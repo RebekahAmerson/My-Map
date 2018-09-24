@@ -7,7 +7,7 @@ class App extends Component {
   state = {
     locations: [
       {name: 'Pittsburg State University',
-      coordinates: [-94.705700, 37.422820],
+      coordinates: [-94.703647, 37.391253],
       description: 'Go, Gorillas!',
       },
       {name: 'The Mall Deli',
@@ -15,7 +15,7 @@ class App extends Component {
       description: 'Must try the Creamy Italian on a cracker!',
       },
       {name: 'Kiddieland',
-      coordinates: [-94.709330, 37.420540],
+      coordinates: [-94.716955, 37.418278],
       description: 'A community treasure.',
       },
       {name: 'Lakeside Park',
@@ -31,7 +31,7 @@ class App extends Component {
       description: 'Mmmmmm, breakfast.',
       },
       {name: 'The Fox Theatre',
-      coordinates: [-94.704920, 37.405280],
+      coordinates: [-94.704920, 37.411511],
       description: 'Restoring a classic theater.',
       },
       {name: 'Memorial Auditorium',
