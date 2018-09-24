@@ -23,9 +23,21 @@ componentDidMount() {
   });
 }
 
+makeMarker(locations) {
+  locations.forEach(location => {
+    new mapboxgl.Marker()
+    .setLngLat(location.coordinates)
+    .addTo(map);
+  })
+}
+
   render() {
+    const {locations} = this.props;
+
     return (
-      <div id="map"></div>
+      <div id="map">
+        { this.makeMarker(locations) }
+      </div>
     )
   }
 }
