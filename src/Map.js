@@ -29,11 +29,17 @@ makeMarker(locations) {
   if (this.state.mapReady) {
     locations.forEach(location => {
       var el = document.createElement('div');
- el.className = 'marker';
+      el.className = 'marker';
       new mapboxgl.Marker(el)
       .setLngLat(location.coordinates)
       .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-      .setHTML('<h3>' + location.name + '</h3><p>' + location.description + '</p>'))
+      .setHTML(`<image src=${location.image} alt=${location.name} height=50 width=50>
+        <h3>${location.name}</h3>
+        <address>${location.address[0]}</br>
+        ${location.address[1]}</br>
+        ${location.phone}</address>
+        <p>${location.description}</p>
+        `))
       .addTo(this.map);
   })}
 }

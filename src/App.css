@@ -63,9 +63,14 @@ button {
 }
 
 .list-item {
+  cursor: pointer;
   border-bottom: solid 1px #585858;
   height: 40px;
   line-height: 40px;
+}
+
+.list-item:hover {
+  box-shadow: inset 0px 0px 15px 2px #FFCE07;
 }
 
 #footer {

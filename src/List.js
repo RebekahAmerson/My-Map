@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-
 class List extends Component {
+
   render() {
     const {locations} = this.props;
 
@@ -15,7 +15,7 @@ class List extends Component {
         </div>
         <div id="list-view">
           <ul id="list">
-          {locations.map(location => (<li className="list-item" key={location.name}>{location.name}</li>))}
+          {locations.map(location => (<li className="list-item" key={location.name} onClick={() => console.log(location)}>{location.name}</li>))}
           </ul>
         </div>
       </div>
