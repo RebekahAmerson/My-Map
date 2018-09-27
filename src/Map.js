@@ -26,23 +26,18 @@ componentDidMount() {
     zoom: zoomSize
   });
   this.setState({mapReady: true});
-
-  new mapboxgl.Popup({ offset: 25 }) // add popups
-  .setLngLat([-94.705097, 37.411381])
-  .setHTML(`Here we are`)
-  .addTo(this.map);
-
 }
 
 makeMarker(locations) {
   if (this.state.mapReady) {
     let markers = document.querySelectorAll('.marker');
     Array.from(markers).forEach(marker => marker.remove());
+    // Array.from(markers).forEach(marker => marker.getPopup());
     locations.forEach(location => {
       const el = document.createElement('div');
       el.className = 'marker';
 
-      new mapboxgl.Marker(el)
+      let marker = new mapboxgl.Marker(el)
       .setLngLat(location.coordinates)
       .addTo(this.map);
       el.addEventListener('click', () => {
@@ -50,17 +45,21 @@ makeMarker(locations) {
         if (!location.phone) {
         this.getInfo(location)
           .then((data) => this.setInfo(data, location))
-          .then(() => this.addPopup(location))
+          .then(() => {
+            let popup = new mapboxgl.Popup({ offset: 25 }) // add popups
+            .setHTML(this.formatAddress(location));
+
+            marker.setPopup(popup)
+            .addTo(this.map);
+            marker.togglePopup();
+
+          })
           .catch(function(err) {
               console.log(err);
           });
-        } else {
-          new mapboxgl.Popup({ offset: 25 }) // add popups
-          .setLngLat([-94.705097, 37.411381])
-          .setHTML(`Here we are`)
-          .addTo(this.map);
         }
      });
+     // .then(() => this.addPopup(location))
   })}
 }
 
@@ -71,7 +70,6 @@ getInfo(location) {
 }
 
 setInfo(data, location) {
-  console.log('setting data');
   location.address = data.response.venue.location.formattedAddress;
   if(data.response.venue.contact.formattedPhone) {
     location.phone = data.response.venue.contact.formattedPhone;
@@ -80,7 +78,7 @@ setInfo(data, location) {
   }
 }
 
-addPopup(location) {
+formatAddress(location) {
   let addressFormat;
 
   if (location.address.length < 3) {
@@ -92,14 +90,11 @@ addPopup(location) {
     ${location.phone}</address>`;
   }
 
-  new mapboxgl.Popup({ offset: 25 }) // add popups
-  .setLngLat(location.coordinates)
-  .setHTML(`
+  return (`
     <h3>${location.name}</h3>
     ${addressFormat}
     <p>${location.description}</p>
     `)
-  .addTo(this.map);
 }
 
   render() {
