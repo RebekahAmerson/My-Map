@@ -39,6 +39,7 @@ makeMarker(locations) {
     locations.forEach(location => {
       const el = document.createElement('div');
       el.className = 'marker';
+      console.log(`marker made for ${location.name}`);
 
       new mapboxgl.Marker(el)
       .setLngLat(location.coordinates)
@@ -64,7 +65,6 @@ makeMarker(locations) {
 
 getInfo(location) {
   return(
-  // fetch(`https://api.foursquare.com/v2/venues/explore?near=Pittsburg,KS&client_id=${clientId}&client_secret=${clientSecret}&v=20180323`)
   fetch(`https://api.foursquare.com/v2/venues/${location.id}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323`)
     .then((result) => {return result.json()}))
 }
@@ -103,7 +103,9 @@ addPopup(location) {
 }
 
   render() {
+    console.log('map render');
     const {locations} = this.props;
+    console.log(locations);
     return (
       <div id="map">
       { this.makeMarker(locations) }

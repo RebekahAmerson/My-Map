@@ -71,14 +71,24 @@ class App extends Component {
     locations: locationList,
   }
 
+updateLocations(filter) {
+  console.log(filter);
+  if (filter !== 'all'){
+    this.setState({locations: locationList.filter(location => location.category === filter)});
+  } else {
+    this.setState({locations: locationList});
+  }
+}
+
   render() {
+    console.log('app render');
     return (
       <div className="App">
       <header id="header">
         <h1>My Hometown: Pittsburg, KS</h1>
       </header>
       <Map locations={this.state.locations} />
-      <List locations={this.state.locations}/>
+      <List locations={this.state.locations} onChangeFilter={(filter) => this.updateLocations(filter)}/>
       <footer id="footer">Made using Mapbox and Foursquare API</footer>
       </div>
     );
