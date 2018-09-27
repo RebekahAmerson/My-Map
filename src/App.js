@@ -6,74 +6,63 @@ import List from './List.js';
 const locationList = [
   {name: 'Pittsburg State University',
   id: '4bd9def5a8d976b018680cb5',
-  coordinates: [-94.703647, 37.391253],
+  category: 'education',
   description: 'Go, Gorillas!',
-  address: ['1504 S Broadway', 'Pittsburg, KS 66762'],
-  phone: '(620) 231-5000',
-  image: 'https://global.pittstate.edu/_assets/images/splitface_2color.png'
+  coordinates: [-94.704782, 37.391255]
   },
   {name: 'The Mall Deli',
   id: '4cba41ae9552b60cc11cd98b',
-  coordinates: [-94.703100, 37.380270],
+  category: 'food',
   description: 'Must try the Creamy Italian on a cracker!',
-  address: [],
-  phone: '',
+  coordinates: [-94.703544, 37.380820]
   },
   {name: 'Kiddieland',
   id: '4cb0c8f3cbab236a1e99a373',
-  coordinates: [-94.716955, 37.418278],
+  category: 'kids',
   description: 'A community treasure.',
-  address: [],
-  phone: '',
+  coordinates: [-94.717326, 37.418476]
   },
   {name: 'Lakeside Park',
   id: '4c817ae947cc224bafcd7c9f',
-  coordinates: [-94.729400, 37.469790],
+  category: 'kids',
   description: 'Watch out for the angry geese!',
-  address: [],
-  phone: '',
+  coordinates: [-94.713367, 37.403478]
   },
   {name: 'Lotus Express',
   id: '4c0946b66071a59375a1dd32',
-  coordinates: [-94.705290, 37.404850],
+  category: 'food',
   description: 'Cashew Chicken done right!',
-  address: [],
-  phone: '',
+  coordinates: [-94.705292, 37.404850]
   },
   {name: 'Harry\'s Cafe',
   id: '4c5d8f776ebe2d7fea1fd32e',
-  coordinates: [-94.704370, 37.411570],
+  category: 'food',
   description: 'Mmmmmm, breakfast.',
-  address: [],
-  phone: '',
+  coordinates: [-94.704474, 37.411477]
   },
   {name: 'The Fox Theatre',
   id: '4f32c6c519836c91c7f95d12',
-  coordinates: [-94.704920, 37.411511],
+  category: 'entertainment',
   description: 'Restoring a classic theater.',
-  address: [],
-  phone: '',
+  coordinates: [-94.705097, 37.411381]
   },
   {name: 'Memorial Auditorium',
   id: '4c6b461523971b8de7369a8a',
-  coordinates: [-94.706780, 37.412590],
+  category: 'entertainment',
   description: 'Go see a ballet! They are great!',
-  address: [],
-  phone: '',
+  coordinates: [-94.706476, 37.412463]
   },
   {name: 'Pitt Plastics',
   id: '4cd71d3ba5b34688fa759750',
-  coordinates: [-94.679350, 37.438290],
+  category: 'business',
   description: 'Makin\' trash bags.',
-  address: [],
-  phone: '',
+  coordinates: [-94.679352, 37.438290]
   },
   {name: 'NPC International',
   id: '4c5725ee6201e21e330f4f6e',
-  coordinates: [-94.713360, 37.426440],
+  category: 'business',
   description: 'Pizza empire.',
-  address: [],
-  phone: '',
+  coordinates: [-94.713364, 37.426441]
   }
 ];
 
@@ -82,27 +71,28 @@ const clientSecret = '2VQNBUIAR13FXP3SSIJCJOY2DQIRLQPVOZQN4USKLHNJHAOG';
 
 class App extends Component {
   state = {
-    locations: locationList
+    locations: locationList,
   }
 
   getInfo(locations) {
     locations.forEach(location => {
-      fetch(`https://api.foursquare.com/v2/venues/${location.id}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323`)
-          .then(function(response) {
-              return response.json();
-          })
-          .then(data => {
-            location.address = data.response.venue.location.formattedAddress;
-            location.phone = data.response.venue.contact.formattedPhone;
-          })
+      // fetch(`https://api.foursquare.com/v2/venues/${location.id}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323`)
+      fetch(`https://api.foursquare.com/v2/venues/explore?near=Pittsburg,KS&client_id=${clientId}&client_secret=${clientSecret}&v=20180323`)
+        .then(() => console.log(locations.indexOf(location)))
+          // .then(function(response) {
+          //     return response.json();
+          // })
+          // .then(data => {
+          //   console.log(data);
+          //   location.address = data.response.venue.location.formattedAddress;
+          //   location.phone = data.response.venue.contact.formattedPhone;
+          //   location.coordinates = [data.response.venue.location.lng, data.response.venue.location.lat];
+          //   location.category = data.response.venue.categories[0].name;
+          // })
           .catch(function(err) {
               console.log(err);
           });
     })
-  }
-
-  componentDidMount() {
-    // this.getInfo(locationList);
   }
 
   render() {
@@ -111,7 +101,7 @@ class App extends Component {
       <header id="header">
         <h1>My Hometown: Pittsburg, KS</h1>
       </header>
-      <Map locations={this.state.locations}/>
+      <Map locations={this.state.locations} />
       <List locations={this.state.locations}/>
       <footer id="footer">Made using Mapbox and Foursquare API</footer>
       </div>
