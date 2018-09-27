@@ -66,33 +66,9 @@ const locationList = [
   }
 ];
 
-const clientId = 'RMCI1YEJ0BVUTQV1BXNVKE3SQLOWFAFGWBAIXAEBKRNLS4OL';
-const clientSecret = '2VQNBUIAR13FXP3SSIJCJOY2DQIRLQPVOZQN4USKLHNJHAOG';
-
 class App extends Component {
   state = {
     locations: locationList,
-  }
-
-  getInfo(locations) {
-    locations.forEach(location => {
-      // fetch(`https://api.foursquare.com/v2/venues/${location.id}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323`)
-      fetch(`https://api.foursquare.com/v2/venues/explore?near=Pittsburg,KS&client_id=${clientId}&client_secret=${clientSecret}&v=20180323`)
-        .then(() => console.log(locations.indexOf(location)))
-          // .then(function(response) {
-          //     return response.json();
-          // })
-          // .then(data => {
-          //   console.log(data);
-          //   location.address = data.response.venue.location.formattedAddress;
-          //   location.phone = data.response.venue.contact.formattedPhone;
-          //   location.coordinates = [data.response.venue.location.lng, data.response.venue.location.lat];
-          //   location.category = data.response.venue.categories[0].name;
-          // })
-          .catch(function(err) {
-              console.log(err);
-          });
-    })
   }
 
   render() {
