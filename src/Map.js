@@ -36,10 +36,11 @@ componentDidMount() {
 
 makeMarker(locations) {
   if (this.state.mapReady) {
+    let markers = document.querySelectorAll('.marker');
+    Array.from(markers).forEach(marker => marker.remove());
     locations.forEach(location => {
       const el = document.createElement('div');
       el.className = 'marker';
-      console.log(`marker made for ${location.name}`);
 
       new mapboxgl.Marker(el)
       .setLngLat(location.coordinates)
@@ -99,13 +100,10 @@ addPopup(location) {
     <p>${location.description}</p>
     `)
   .addTo(this.map);
-  console.log(this.map);
 }
 
   render() {
-    console.log('map render');
     const {locations} = this.props;
-    console.log(locations);
     return (
       <div id="map">
       { this.makeMarker(locations) }

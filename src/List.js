@@ -13,7 +13,6 @@ class List extends Component {
   }
 
   render() {
-    console.log('list render');
     const {locations} = this.props;
     const categories = [
       'all',

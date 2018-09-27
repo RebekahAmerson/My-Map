@@ -81,7 +81,6 @@ updateLocations(filter) {
 }
 
   render() {
-    console.log('app render');
     return (
       <div className="App">
       <header id="header">
