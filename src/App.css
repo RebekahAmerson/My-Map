@@ -89,15 +89,23 @@ button {
 }
 
 .marker {
-  background-image: url('red-pointer.png');
+  background-image: url('red-pointer2.png');
   background-size: cover;
   width: 27px;
   height: 41px;
   cursor: pointer;
+  transition: .5s;
 }
 
-.marker:hover {
-  background-image: url('gold-pointer.png');
+/* .marker:hover,  */
+.clicked {
+  background-image: url('gold-pointer2.png');
+}
+
+.clicked {
+  transition: .5s;
+  width: 40px;
+  height: 61px;
 }
 
 /*  Media Queries  */

@@ -72,7 +72,6 @@ class App extends Component {
   }
 
 updateLocations(filter) {
-  console.log(filter);
   if (filter !== 'all'){
     this.setState({locations: locationList.filter(location => location.category === filter)});
   } else {

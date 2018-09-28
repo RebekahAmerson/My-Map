@@ -30,9 +30,8 @@ componentDidMount() {
 
 makeMarker(locations) {
   if (this.state.mapReady) {
-    let markers = document.querySelectorAll('.marker');
-    Array.from(markers).forEach(marker => marker.remove());
-    // Array.from(markers).forEach(marker => marker.getPopup());
+    let markers = Array.from(document.querySelectorAll('.marker'));
+    markers.forEach(marker => marker.remove());
     locations.forEach(location => {
       const el = document.createElement('div');
       el.className = 'marker';
@@ -41,12 +40,14 @@ makeMarker(locations) {
       .setLngLat(location.coordinates)
       .addTo(this.map);
       el.addEventListener('click', () => {
-//if data doesn't exist, getInfo.then(setInfo).then(addPopup), otherwise just addPopup
+        el.classList.add('clicked');
+        window.addEventListener('click', function() {this.removeClass(el)});
+//if data doesn't exist, getInfo.then(setInfo).then(addPopup)
         if (!location.phone) {
         this.getInfo(location)
           .then((data) => this.setInfo(data, location))
           .then(() => {
-            let popup = new mapboxgl.Popup({ offset: 25 }) // add popups
+            let popup = new mapboxgl.Popup({ offset: 32 }) // add popups
             .setHTML(this.formatAddress(location));
 
             marker.setPopup(popup)
@@ -59,8 +60,14 @@ makeMarker(locations) {
           });
         }
      });
-     // .then(() => this.addPopup(location))
   })}
+}
+
+removeClass(el) {
+  console.log('listening for click');
+  el.classList.remove('clicked');
+  window.removeEventListener('click', this.removeClass);
+  console.log('stop listening for click');
 }
 
 getInfo(location) {
