@@ -28,9 +28,8 @@ class Map extends Component {
     this.setState({mapReady: true});
 
     window.addEventListener('mousedown', (event) => {
-      const popup = document.querySelector('.mapboxgl-popup');
       const clicked = document.querySelector('.clicked');
-      if(popup && event.target !== clicked) {
+      if(clicked && event.target !== clicked) {
         clicked.classList.remove('clicked');
       }
     })
@@ -38,126 +37,77 @@ class Map extends Component {
 
   makeMarker(locations) {
     if (this.state.mapReady) {
-      const markers = document.querySelectorAll('.marker');
+      const oldMarkers = document.querySelectorAll('.marker');
   //remove previous markers.
-      markers.forEach(marker => marker.remove());
+      oldMarkers.forEach(oldMarker => oldMarker.remove());
   //make new markers for updated location list.
       locations.forEach(location => {
-        const el = document.createElement('div');
-        el.className = 'marker';
+        this.setupMarkers(location);
+      })
 
-        let marker = new mapboxgl.Marker(el)
-        .setLngLat(location.coordinates)
-        .addTo(this.map);
-        let popup = new mapboxgl.Popup({ offset: 32 });
+      if (this.props.openMarker.open) {
+        console.log('open marker triggered');
+        const currentPopup = document.querySelector('.mapboxgl-popup');
+        const index = [this.props.openMarker.index];
+        const tempMark = document.querySelectorAll('.marker')[index];
+        if (currentPopup) {
+          currentPopup.remove();
+        }
 
-        el.addEventListener('click', () => {
-          const popupOpen = document.querySelector('.mapboxgl-popup');
-          //if data doesn't exist, getInfo.then(setInfo).then(addPopup)
-          if (!location.phone) {
-            this.getInfo(location)
-            .then((data) => this.setInfo(data, location))
-            .then(() => popup.setHTML(this.formatAddress(location)))
-            .catch(function(err) {
-              console.log(err);
-              popup.setHTML(`
-                <h3>${location.name}</h3>
-                <p>Unable to get extra info</p>
-                <p>${location.description}</p>
-                `);
-              });
-          } else {
-            popup.setHTML(this.formatAddress(location));
-          }
-          marker.setPopup(popup);
-          el.classList.toggle('clicked');
+        if (tempMark) {
+          tempMark.remove();
+        }
 
-          if (popupOpen) {
-            marker.togglePopup();
-          }
-       });
-    })
-    // if (this.props.openMarker.open) {
-    //   console.log('open marker triggered');
-    //   const index = [this.props.openMarker.index];
-    //   const tempMark = document.querySelectorAll('.marker')[index];
-    //   if (tempMark) {
-    //     tempMark.classList.add('clicked');
-    //   }
-    //   if (!popupOpen) {
-    //     if (!locations[index].phone) {
-    //     this.makePopup(locations[index], tempMark);
-    //     } else {
-    //     tempMark.togglePopup();
-    //     }
-    //   }
-    // }
+        const newMarker = this.setupMarkers(locations[index]);
+        const popup = new mapboxgl.Popup({ offset: 32 });
+        this.makePopup(locations[index], popup, newMarker);
+        newMarker.togglePopup();
+        console.log(tempMark);
+        document.querySelectorAll('.marker')[9].classList.add('clicked');
+
+      }
   }}
 
-  // makeMarker(locations) {
-  //   if (this.state.mapReady) {
-  //     const markers = document.querySelectorAll('.marker');
-  //     const popupOpen = document.querySelector('.mapboxgl-popup');
-  // //remove previous markers.
-  //     markers.forEach(marker => marker.remove());
-  // //make new markers for updated location list.
-  //     locations.forEach(location => {
-  //       const el = document.createElement('div');
-  //       el.className = 'marker';
-  //
-  //       let marker = new mapboxgl.Marker(el)
-  //       .setLngLat(location.coordinates)
-  //       .addTo(this.map);
-  // //on click, turn marker gold.
-  //       el.addEventListener('click', (event) => {
-  //         debugger;
-  //         if (!popupOpen) {
-  //           console.log('make it gold');
-  //           el.classList.add('clicked');
-  //         }
-  //         //if data doesn't exist, getInfo.then(setInfo).then(addPopup)
-  //         if (!location.phone) {
-  //           this.makePopup(location, marker);
-  //         }
-  //      });
-  //   })
-  //   if (this.props.openMarker.open) {
-  //     console.log('open marker triggered');
-  //     const index = [this.props.openMarker.index];
-  //     const tempMark = document.querySelectorAll('.marker')[index];
-  //     if (tempMark) {
-  //       tempMark.classList.add('clicked');
-  //     }
-  //     if (!popupOpen) {
-  //       if (!locations[index].phone) {
-  //       this.makePopup(locations[index], tempMark);
-  //       } else {
-  //       tempMark.togglePopup();
-  //       }
-  //     }
-  //   }
-  // }}
-  //
-  // makePopup(location, marker) {
-  //   console.log(marker);
-  //   let popup = new mapboxgl.Popup({ offset: 32 }) // add popups
-  //   this.getInfo(location)
-  //     .then((data) => this.setInfo(data, location))
-  //     .then(() => {
-  //       popup.setHTML(this.formatAddress(location));
-  //     })
-  //     .catch(function(err) {
-  //       console.log(err);
-  //       popup.setHTML(`
-  //         <h3>${location.name}</h3>
-  //         <p>Unable to get extra info</p>
-  //         <p>${location.description}</p>
-  //         `);
-  //
-  //     });
-  //     marker.setPopup(popup)
-  //     .addTo(this.map);
-  //   }
+  setupMarkers(location) {
+      const el = document.createElement('div');
+      el.className = 'marker';
+
+      const marker = new mapboxgl.Marker(el)
+      .setLngLat(location.coordinates)
+      .addTo(this.map);
+      const popup = new mapboxgl.Popup({ offset: 32 });
+
+      el.addEventListener('click', () => {
+        const popupOpen = document.querySelector('.mapboxgl-popup');
+        //if data doesn't exist, getInfo.then(setInfo).then(addPopup)
+        this.makePopup(location, popup, marker);
+        el.classList.toggle('clicked');
+
+        if (popupOpen) {
+          marker.togglePopup();
+        }
+     });
+     return(marker);
+  }
+
+  makePopup(location, popup, marker) {
+    if (!location.phone) {
+      this.getInfo(location)
+      .then((data) => this.setInfo(data, location))
+      .then(() => popup.setHTML(this.formatAddress(location)))
+      .catch(function(err) {
+        console.log(err);
+        popup.setHTML(`
+          <h3>${location.name}</h3>
+          <p>Unable to get extra info</p>
+          <p>${location.description}</p>
+          `);
+        });
+    } else {
+      popup.setHTML(this.formatAddress(location));
+      }
+    marker.setPopup(popup);
+  }
 
   getInfo(location) {
     return(
