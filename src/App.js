@@ -68,7 +68,7 @@ const locationList = [
 
 class App extends Component {
   state = {
-    locations: locationList,
+    locations: locationList
   }
 
 updateLocations(filter) {

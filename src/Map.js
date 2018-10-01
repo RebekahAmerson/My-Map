@@ -26,12 +26,22 @@ componentDidMount() {
     zoom: zoomSize
   });
   this.setState({mapReady: true});
+
+  window.addEventListener('mousedown', (event) => {
+    const popup = document.querySelector('.mapboxgl-popup');
+    const clicked = document.querySelector('.clicked');
+    if(popup != null && clicked != null) {
+      document.querySelector('.clicked').classList.remove('clicked');
+    }
+  })
 }
 
 makeMarker(locations) {
   if (this.state.mapReady) {
-    let markers = Array.from(document.querySelectorAll('.marker'));
+    let markers = document.querySelectorAll('.marker');
+//remove previous markers.
     markers.forEach(marker => marker.remove());
+//make new markers for updated location list.
     locations.forEach(location => {
       const el = document.createElement('div');
       el.className = 'marker';
@@ -39,9 +49,11 @@ makeMarker(locations) {
       let marker = new mapboxgl.Marker(el)
       .setLngLat(location.coordinates)
       .addTo(this.map);
-      el.addEventListener('click', () => {
-        el.classList.add('clicked');
-        window.addEventListener('click', function() {this.removeClass(el)});
+//on click, turn marker gold and add listener so on next click, turn marker back to red.
+      el.addEventListener('click', (event) => {
+        if (!document.querySelector('.mapboxgl-popup')) {
+          el.classList.add('clicked');
+        }
 //if data doesn't exist, getInfo.then(setInfo).then(addPopup)
         if (!location.phone) {
         this.getInfo(location)
@@ -53,21 +65,23 @@ makeMarker(locations) {
             marker.setPopup(popup)
             .addTo(this.map);
             marker.togglePopup();
-
           })
           .catch(function(err) {
-              console.log(err);
+            let popup = new mapboxgl.Popup({ offset: 32 }) // add popups
+            .setHTML(`
+              <h3>${location.name}</h3>
+              <p>Unable to get extra info</p>
+              <p>${location.description}</p>
+              `);
+
+            marker.setPopup(popup)
+            .addTo(this.map);
+            marker.togglePopup();
+            console.log(err);
           });
         }
      });
   })}
-}
-
-removeClass(el) {
-  console.log('listening for click');
-  el.classList.remove('clicked');
-  window.removeEventListener('click', this.removeClass);
-  console.log('stop listening for click');
 }
 
 getInfo(location) {
