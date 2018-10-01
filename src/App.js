@@ -68,7 +68,11 @@ const locationList = [
 
 class App extends Component {
   state = {
-    locations: locationList
+    locations: locationList,
+    markers: {
+      open: false,
+      index: ''
+    }
   }
 
 updateLocations(filter) {
@@ -79,14 +83,22 @@ updateLocations(filter) {
   }
 }
 
+passToMap = (indexNum) => {
+  this.setState({markers: {
+        open: true,
+        index: indexNum
+      }
+})
+}
+
   render() {
     return (
       <div className="App">
       <header id="header">
         <h1>My Hometown: Pittsburg, KS</h1>
       </header>
-      <Map locations={this.state.locations} />
-      <List locations={this.state.locations} onChangeFilter={(filter) => this.updateLocations(filter)}/>
+      <Map locations={this.state.locations} openMarker={this.state.markers}/>
+      <List locations={this.state.locations} onChangeFilter={(filter) => this.updateLocations(filter)} onListClick={(index) => this.passToMap(index)}/>
       <footer id="footer">Made using Mapbox and Foursquare API</footer>
       </div>
     );

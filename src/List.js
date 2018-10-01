@@ -12,6 +12,13 @@ class List extends Component {
     }
   }
 
+  handleClick(location) {
+    const locationIndex = this.props.locations.indexOf(location);
+    if (this.props.onListClick) {
+      this.props.onListClick(locationIndex);
+    }
+  }
+
   render() {
     const {locations} = this.props;
     const categories = [
@@ -33,7 +40,7 @@ class List extends Component {
         </div>
         <div id="list-view">
           <ul id="list">
-          {locations.map(location => (<li className="list-item" key={location.name} onClick={() => console.log(location)}>{location.name}</li>))}
+          {locations.map(location => (<li className="list-item" key={location.name} onClick={() => this.handleClick(location)}>{location.name}</li>))}
           </ul>
         </div>
       </div>
