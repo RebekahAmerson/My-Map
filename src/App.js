@@ -57,8 +57,6 @@ const locationList = [
   category: 'business',
   description: 'Makin\' trash bags.',
   coordinates: [-94.679352, 37.438290],
-  phone: '620-231-5849',
-  address: ['atkinson', 'pittsburg']
   },
   {name: 'NPC International',
   id: '4c5725ee6201e21e330f4f6e',
@@ -90,7 +88,7 @@ passToMap = (indexNum) => {
         open: true,
         index: indexNum
       }
-})
+  })
 }
 
   render() {

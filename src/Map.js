@@ -26,7 +26,7 @@ class Map extends Component {
       zoom: zoomSize
     });
     this.setState({mapReady: true});
-
+//Unhighligts marker when clicked off marker.
     window.addEventListener('mousedown', (event) => {
       const clicked = document.querySelector('.clicked');
       if(clicked && event.target !== clicked) {
@@ -44,30 +44,31 @@ class Map extends Component {
       locations.forEach(location => {
         this.setupMarkers(location);
       })
-
+//If List item was clicked.....
       if (this.props.openMarker.open) {
-        console.log('open marker triggered');
         const currentPopup = document.querySelector('.mapboxgl-popup');
         const index = [this.props.openMarker.index];
         const tempMark = document.querySelectorAll('.marker')[index];
+//remove old popup, if one is open
         if (currentPopup) {
           currentPopup.remove();
         }
-
+//remove old marker
         if (tempMark) {
           tempMark.remove();
         }
-
+//create new marker and popup, add to map
         const newMarker = this.setupMarkers(locations[index]);
         const popup = new mapboxgl.Popup({ offset: 32 });
         this.makePopup(locations[index], popup, newMarker);
         newMarker.togglePopup();
-        console.log(tempMark);
-        document.querySelectorAll('.marker')[9].classList.add('clicked');
-
+//grab new div with marker and highlight.
+        const newMarkers = document.querySelectorAll('.marker');
+        newMarkers[newMarkers.length - 1].classList.add('clicked');
       }
   }}
 
+//Create new marker and popup. Add event listener.
   setupMarkers(location) {
       const el = document.createElement('div');
       el.className = 'marker';
@@ -78,19 +79,15 @@ class Map extends Component {
       const popup = new mapboxgl.Popup({ offset: 32 });
 
       el.addEventListener('click', () => {
-        const popupOpen = document.querySelector('.mapboxgl-popup');
-        //if data doesn't exist, getInfo.then(setInfo).then(addPopup)
         this.makePopup(location, popup, marker);
         el.classList.toggle('clicked');
-
-        if (popupOpen) {
-          marker.togglePopup();
-        }
      });
      return(marker);
   }
 
+//Sets the specifics of the popup.
   makePopup(location, popup, marker) {
+    //if data doesn't exist, getInfo.then(setInfo).then(addPopup)
     if (!location.phone) {
       this.getInfo(location)
       .then((data) => this.setInfo(data, location))
@@ -109,12 +106,14 @@ class Map extends Component {
     marker.setPopup(popup);
   }
 
+//Makes a call to Foursquare API and gathers street address and phone data.
   getInfo(location) {
     return(
     fetch(`https://api.foursquare.com/v2/venues/${location.id}?client_id=${clientId}&client_secret=${clientSecret}&v=20180323`)
       .then((result) => {return result.json()}))
   }
 
+//Sets API data to the local variables to be stored for later use.
   setInfo(data, location) {
     location.address = data.response.venue.location.formattedAddress;
     if(data.response.venue.contact.formattedPhone) {

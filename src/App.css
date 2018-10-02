@@ -86,6 +86,7 @@ button {
 #wrapper {
   grid-area: filter;
   background-color: #484848;
+  min-height: calc(100vh - 435px);
 }
 
 .marker {
