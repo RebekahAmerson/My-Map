@@ -76,6 +76,14 @@ class App extends Component {
   }
 
 updateLocations(filter) {
+  if (this.state.markers.open) {
+    console.log('marker is open');
+    this.setState({markers: {
+          open: false,
+          index: ''
+        }
+    })
+  }
   if (filter !== 'all'){
     this.setState({locations: locationList.filter(location => location.category === filter)});
   } else {
