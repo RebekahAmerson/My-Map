@@ -25,10 +25,17 @@ class Map extends Component {
       center: [ -94.704709, 37.410496 ],
       zoom: zoomSize
     });
+
+    this.map.on('error', () => alert('Looks like Mapbox was unable to load the map.'));
+
     this.setState({mapReady: true});
 //Unhighligts marker when clicked off marker.
     window.addEventListener('mousedown', (event) => {
       const clicked = document.querySelector('.clicked');
+      const openPopup = document.querySelector('.mapboxgl-popup');
+      if (openPopup) {
+        openPopup.remove();
+      }
       if(clicked && event.target !== clicked) {
         clicked.classList.remove('clicked');
       }
