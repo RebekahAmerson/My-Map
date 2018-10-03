@@ -39,9 +39,7 @@ class List extends Component {
           </select>
         </div>
         <div id="list-view">
-          <ul id="list">
-          {locations.map(location => (<li className="list-item" key={location.name} onClick={() => this.handleClick(location)}>{location.name}</li>))}
-          </ul>
+          {locations.map(location => (<button className="list-item" key={location.name} onClick={() => this.handleClick(location)}>{location.name}</button>))}
         </div>
       </div>
     )
