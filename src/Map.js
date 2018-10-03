@@ -85,10 +85,19 @@ class Map extends Component {
       .addTo(this.map);
       const popup = new mapboxgl.Popup({ offset: 32 });
 
+      el.setAttribute('tabindex', 0);
+
       el.addEventListener('click', () => {
         this.makePopup(location, popup, marker);
         el.classList.toggle('clicked');
      });
+
+     el.addEventListener('focus', () => {
+       this.makePopup(location, popup, marker);
+       marker.togglePopup();
+    });
+
+    el.addEventListener('focusout', () => popup.remove());
      return(marker);
   }
 

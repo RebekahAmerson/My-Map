@@ -95,6 +95,7 @@ input {
 }
 
 .marker:hover,
+.marker:focus,
 .clicked {
   background-image: url('gold-pointer2.png');
 }
