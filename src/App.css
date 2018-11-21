@@ -83,6 +83,7 @@ input {
   grid-area: filter;
   background-color: #484848;
   min-height: calc(100vh - 435px);
+  min-height: calc(var(--vh, 100vh) - 435px);
 }
 
 .marker {
@@ -107,7 +108,7 @@ input {
 }
 
 /*  Media Queries  */
-@media only screen and (min-width: 590px) {
+@media only screen and (min-width: 759px) {
   .App {
     grid-template-areas: 'header header' 'map filter' 'foot foot';
     grid-template-rows: 50px 1fr 35px;
@@ -122,11 +123,14 @@ input {
   #map {
     margin-top: 0;
     height: calc(100vh - 85px);
+    height: calc(var(--vh, 100vh) - 85px);
   }
 
   .list-item {
     font-size: 1.1em;
-    height: calc((100vh - 135px)/10);
-    line-height: calc((100vh - 135px)/10);
+    height: calc((100vh - 136px)/10);
+    height: calc((var(--vh, 100vh) - 136px)/10);
+    line-height: calc((100vh - 136px)/10);
+    line-height: calc((var(--vh, 100vh) - 136px)/10);
   }
 }

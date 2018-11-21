@@ -66,6 +66,9 @@ const locationList = [
   }
 ];
 
+const vh = window.innerHeight;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+
 class App extends Component {
   state = {
     locations: locationList,
